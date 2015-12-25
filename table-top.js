@@ -12,6 +12,22 @@ exports.start = function() {
         width: '100%',
         height: '100%'
     });
+    this.screen.log.key('pageup',function(ch,key) {
+        this.scroll(-this.getScrollHeight());
+        this.screen.render();
+    });
+    this.screen.log.key('pagedown',function(ch,key) {
+        this.scroll(this.getScrollHeight());
+        this.screen.render();
+    });
+    this.screen.log.key('up',function(ch,key) {
+        this.scroll(-1);
+        this.screen.render();
+    });
+    this.screen.log.key('down',function(ch,key) {
+        this.scroll(1);
+        this.screen.render();
+    });
     this.screen.key('C-c',function(c,k){process.kill(process.pid);});
     this.screen.append(this.screen.log);
     this.screen.log.focus();
