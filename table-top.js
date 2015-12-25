@@ -19,6 +19,14 @@ exports.start = function() {
                 }
             }
         });
+        log.key('end',function(ch,key) {
+            this.setScrollPerc(100);
+            screen.render();
+        });
+        log.key('home',function(ch,key) {
+            this.setScrollPerc(0);
+            screen.render();
+        });
         log.key('pageup',function(ch,key) {
             this.scroll(-this.getScrollHeight());
             screen.render();
