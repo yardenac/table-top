@@ -5,35 +5,39 @@
 const blessed = require('blessed');
 
 exports.start = function() {
-    this.screen = blessed.screen({
+    var screen = this.screen = blessed.screen({
         smartCSR: true
     });
-    this.screen.log = blessed.log({
-        width: '100%',
-        height: '100%',
-        scrollbar: true,
-        style: {
-            scrollbar: {
-                bg: '#555555'
+    var mklog = function mklog() {
+        var log = blessed.log({
+            width: '100%',
+            height: '100%',
+            scrollbar: true,
+            style: {
+                scrollbar: {
+                    bg: '#555555'
+                }
             }
-        }
-    });
-    this.screen.log.key('pageup',function(ch,key) {
-        this.scroll(-this.getScrollHeight());
-        this.screen.render();
-    });
-    this.screen.log.key('pagedown',function(ch,key) {
-        this.scroll(this.getScrollHeight());
-        this.screen.render();
-    });
-    this.screen.log.key('up',function(ch,key) {
-        this.scroll(-1);
-        this.screen.render();
-    });
-    this.screen.log.key('down',function(ch,key) {
-        this.scroll(1);
-        this.screen.render();
-    });
+        });
+        log.key('pageup',function(ch,key) {
+            this.scroll(-this.getScrollHeight());
+            screen.render();
+        });
+        log.key('pagedown',function(ch,key) {
+            this.scroll(this.getScrollHeight());
+            screen.render();
+        });
+        log.key('up',function(ch,key) {
+            this.scroll(-1);
+            screen.render();
+        });
+        log.key('down',function(ch,key) {
+            this.scroll(1);
+            screen.render();
+        });
+        return log;
+    };
+    this.screen.log = mklog();
     this.screen.key('left',function(ch,key) {
         if (key.sequence === "\u001b\u001bOD") {
             exports.log('left');
