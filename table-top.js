@@ -37,7 +37,9 @@ exports.start = function() {
         });
         return log;
     };
-    this.screen.log = mklog();
+    this.screen.wins = {
+        'log': mklog()
+    }
     this.screen.key('left',function(ch,key) {
         if (key.sequence === "\u001b\u001bOD") {
             exports.log('left');
@@ -51,11 +53,13 @@ exports.start = function() {
         this.screen.render();
     });
     this.screen.key('C-c',function(c,k){process.kill(process.pid);});
-    this.screen.append(this.screen.log);
-    this.screen.log.focus();
+    Object.keys(this.screen.wins).forEach(function(key) {
+        screen.append(screen.wins[key]);
+    });
+    this.screen.wins[0].focus();
     this.screen.render();
 };
 
 exports.log = function(text) {
-    this.screen.log.log(text);
+    this.screen.wins["log"].log(text);
 };
