@@ -10,7 +10,13 @@ exports.start = function() {
     });
     this.screen.log = blessed.log({
         width: '100%',
-        height: '100%'
+        height: '100%',
+        scrollbar: true,
+        style: {
+            scrollbar: {
+                bg: '#555555'
+            }
+        }
     });
     this.screen.log.key('pageup',function(ch,key) {
         this.scroll(-this.getScrollHeight());
