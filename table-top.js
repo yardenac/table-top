@@ -37,7 +37,7 @@ exports.start = function() {
         });
         return log;
     };
-    this.screen.wins = {
+    var wins = {
         'log': mklog()
     }
     this.screen.key('left',function(ch,key) {
@@ -53,13 +53,12 @@ exports.start = function() {
         this.screen.render();
     });
     this.screen.key('C-c',function(c,k){process.kill(process.pid);});
-    Object.keys(this.screen.wins).forEach(function(key) {
-        screen.append(screen.wins[key]);
+    Object.keys(wins).forEach(function(key) {
+        screen.append(wins[key]);
     });
-    this.screen.wins[0].focus();
+    wins['log'].focus();
+    this.log = function(text) {
+        return wins["log"].log(text);
+    };
     this.screen.render();
-};
-
-exports.log = function(text) {
-    this.screen.wins["log"].log(text);
 };
