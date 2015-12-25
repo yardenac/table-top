@@ -37,26 +37,44 @@ exports.start = function() {
         });
         return log;
     };
+    var mktt = function mktabs() {
+        var tt = blessed.box({
+            width: '100%',
+            height: '100%',
+            style: {bg:'#aaffaa'}
+        });
+        return tt;
+    };
     var wins = {
-        'log': mklog()
+        'log': mklog(),
+        'tt': mktt()
     }
+    var winarr = ['log','tt'];
     this.screen.key('left',function(ch,key) {
         if (key.sequence === "\u001b\u001bOD") {
-            exports.log('left');
+            if (--fwin < 0)
+                fwin = winarr.length - 1;
+            wins[winarr[fwin]].focus();
+            wins[winarr[fwin]].setFront();
+            this.screen.render();
         };
-        this.screen.render();
     });
     this.screen.key('right',function(ch,key) {
         if (key.sequence === "\u001b\u001bOC") {
-            exports.log('right');
+            if (++fwin >= winarr.length)
+                fwin = 0;
+            wins[winarr[fwin]].focus();
+            wins[winarr[fwin]].setFront();
+            this.screen.render();
         };
-        this.screen.render();
     });
     this.screen.key('C-c',function(c,k){process.kill(process.pid);});
     Object.keys(wins).forEach(function(key) {
         screen.append(wins[key]);
     });
-    wins['log'].focus();
+    var fwin = 0;
+    wins[winarr[fwin]].focus();
+    wins[winarr[fwin]].setFront();
     this.log = function(text) {
         return wins["log"].log(text);
     };
