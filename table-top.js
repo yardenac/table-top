@@ -34,6 +34,18 @@ exports.start = function() {
         this.scroll(1);
         this.screen.render();
     });
+    this.screen.key('left',function(ch,key) {
+        if (key.sequence === "\u001b\u001bOD") {
+            exports.log('left');
+        };
+        this.screen.render();
+    });
+    this.screen.key('right',function(ch,key) {
+        if (key.sequence === "\u001b\u001bOC") {
+            exports.log('right');
+        };
+        this.screen.render();
+    });
     this.screen.key('C-c',function(c,k){process.kill(process.pid);});
     this.screen.append(this.screen.log);
     this.screen.log.focus();
