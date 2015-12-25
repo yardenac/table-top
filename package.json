@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/yardenac/table-top/issues"
   },
-  "homepage": "https://github.com/yardenac/table-top#readme"
+    "homepage": "https://github.com/yardenac/table-top#readme",
+    "dependencies": {
+        "blessed": "^0.1.81"
+    }
 }
